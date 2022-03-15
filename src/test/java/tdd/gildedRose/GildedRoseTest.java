@@ -57,13 +57,13 @@ class GildedRoseTest {
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(items[0].qualify,  5);
+        assertEquals(items[0].qualify,  11);
     }
 
     @Test
     void updateQualityForABackstagePassesWhenSellInIsFrom6To10(){
         Item[] items = new Item[]{
-                new Item("Backstage passes", 11, 10),
+                new Item("Backstage passes", 10, 10),
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
@@ -83,7 +83,7 @@ class GildedRoseTest {
     @Test
     void updateQualityForABackstagePassesWhenSellInIs0(){
         Item[] items = new Item[]{
-                new Item("Backstage passes", 1, 10),
+                new Item("Backstage passes", 0, 10),
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
