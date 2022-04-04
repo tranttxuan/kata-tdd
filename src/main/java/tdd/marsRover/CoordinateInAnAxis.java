@@ -2,7 +2,7 @@ package tdd.marsRover;
 
 public class CoordinateInAnAxis{
   private int coordinate;
-  private int maxCoordinate;
+  private final int maxCoordinate;
 
   public CoordinateInAnAxis( int coordinate, int maxCoordinate ){
     this.coordinate = coordinate > maxCoordinate ? maxCoordinate : coordinate;
@@ -19,10 +19,6 @@ public class CoordinateInAnAxis{
 
   public int getMaxCoordinate(){
     return maxCoordinate;
-  }
-
-  public void setMaxCoordinate( int maxCoordinate ){
-    this.maxCoordinate = maxCoordinate;
   }
 
   public int getForwardCoordinateInAnAxis(){

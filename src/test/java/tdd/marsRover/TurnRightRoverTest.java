@@ -11,7 +11,7 @@ class TurnRightRoverTest {
     Rover rover = new Rover(
         new CoordinateInAnAxis( 0, 4 ),
         new CoordinateInAnAxis( 0, 4 ),
-        Direction.EAST);
+        Direction.EAST );
     rover.turnRight();
     assertEquals(rover.getDirection(), Direction.SOUTH);
   }
@@ -20,7 +20,7 @@ class TurnRightRoverTest {
     Rover rover = new Rover(
         new CoordinateInAnAxis( 0, 4 ),
         new CoordinateInAnAxis( 0, 4 ),
-        Direction.SOUTH);
+        Direction.SOUTH );
     rover.turnRight();
     assertEquals(rover.getDirection(), Direction.WEST);
   }
@@ -29,7 +29,7 @@ class TurnRightRoverTest {
     Rover rover = new Rover(
         new CoordinateInAnAxis( 0, 4 ),
         new CoordinateInAnAxis( 0, 4 ),
-        Direction.NORTH);
+        Direction.NORTH );
     rover.turnRight();
     assertEquals(rover.getDirection(), Direction.EAST);
   }
@@ -39,7 +39,7 @@ class TurnRightRoverTest {
     Rover rover = new Rover(
         new CoordinateInAnAxis( 0, 4 ),
         new CoordinateInAnAxis( 0, 4 ),
-        Direction.WEST);
+        Direction.WEST );
     rover.turnRight();
     assertEquals(rover.getDirection(), Direction.NORTH);
   }

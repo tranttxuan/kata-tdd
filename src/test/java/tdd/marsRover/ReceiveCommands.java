@@ -3,8 +3,10 @@ package tdd.marsRover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReceiveCommands{
   private Rover rover;
@@ -53,9 +55,28 @@ public class ReceiveCommands{
   }
 
   @Test
-  void commandsContainsInvalidCommands_FlbaR_roverShouldMoveForward() throws Exception{
-    String commands = "FlcbaR";
+  void commandsContainsInvalidCommands_FlbaR_roverShouldMoveForward(){
+    String commands = "Flcr";
     rover.receiveCommands( commands );
-    assertEquals( "1x4E", rover.getPosition( ) );
+    assertEquals( "1x0N", rover.getPosition( ) );
+  }
+
+  @Test
+  void commands_FLFFFB_leadCollisionWithObstacles_roverShouldNotMove(){
+    String commands = "FLFFFB";
+    List<Obstacle> list = new ArrayList<Obstacle>( );
+    list.add( new Obstacle( new CoordinateInAnAxis( 1, 4 ), new CoordinateInAnAxis( 3, 4 ) ) );
+    list.add( new Obstacle( new CoordinateInAnAxis( 1, 4 ), new CoordinateInAnAxis( 1, 4 ) ) );
+    list.add( new Obstacle( new CoordinateInAnAxis( 2, 4 ), new CoordinateInAnAxis( 1, 4 ) ) );
+    Obstacles obstacles = new Obstacles( list );
+    Rover rover1 = new Rover(
+        new CoordinateInAnAxis( 1, 4 ),
+        new CoordinateInAnAxis( 0, 4 ),
+        Direction.EAST,
+        obstacles );
+
+    rover1.receiveCommands( commands );
+    assertEquals( "1x0N", rover1.getPosition( ) );
+    assertEquals( "Rover{position= 1 - 0, direction= NORTH Found Obstacle}" , rover1.toString());
   }
 }

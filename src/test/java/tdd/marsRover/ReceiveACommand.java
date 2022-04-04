@@ -2,8 +2,10 @@ package tdd.marsRover;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ReceiveACommand{
 
@@ -61,7 +63,23 @@ class ReceiveACommand{
         new CoordinateInAnAxis( 0, 4 ),
         new CoordinateInAnAxis( 0, 4 ),
         Direction.EAST );
-    assertThrows( IllegalStateException.class, () -> rover.receiveACommand( 'I' ),"I is invalid command" );
+    assertThrows( IllegalStateException.class, () -> rover.receiveACommand( 'I' ), "I is invalid command" );
   }
 
+  @Test
+  void receiveACommand_MoveToAPositionWhereThereIsAnObstacle_ButRoverShouldNotMove_WhenRoverIsFacingEast(){
+    List<Obstacle> list = new ArrayList<>( );
+    list.add( new Obstacle( new CoordinateInAnAxis( 1, 4 ), new CoordinateInAnAxis( 0, 4 ) ) );
+    list.add( new Obstacle( new CoordinateInAnAxis( 1, 4 ), new CoordinateInAnAxis( 1, 4 ) ) );
+    list.add( new Obstacle( new CoordinateInAnAxis( 2, 4 ), new CoordinateInAnAxis( 2, 4 ) ) );
+    Obstacles obstacles = new Obstacles( list );
+    Rover rover = new Rover(
+        new CoordinateInAnAxis( 0, 4 ),
+        new CoordinateInAnAxis( 0, 4 ),
+        Direction.EAST,
+        obstacles );
+
+   boolean didMovedForward =  rover.receiveACommand( 'F' );
+   assertFalse(didMovedForward);
+  }
 }

@@ -11,7 +11,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 0, 4 ),
             new CoordinateInAnAxis( 0, 4 ),
-            Direction.EAST);
+            Direction.EAST );
         rover.moveForward();
         assertEquals(rover.getX(), 1);
         assertEquals(rover.getY(), 0);
@@ -21,7 +21,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 0, 4 ),
             new CoordinateInAnAxis( 0, 4 ),
-            Direction.SOUTH);
+            Direction.SOUTH );
         rover.moveForward();
         assertEquals(rover.getX(), 0);
         assertEquals(rover.getY(), 4);
@@ -31,7 +31,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 0, 4 ),
             new CoordinateInAnAxis( 0, 4 ),
-            Direction.NORTH);
+            Direction.NORTH );
         rover.moveForward();
         assertEquals(rover.getX(), 0);
         assertEquals(rover.getY(), 1);
@@ -42,7 +42,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 0, 4 ),
             new CoordinateInAnAxis( 0, 4 ),
-            Direction.WEST);
+            Direction.WEST );
         rover.moveForward();
         assertEquals(rover.getX(), 4);
         assertEquals(rover.getY(), 0);
@@ -53,7 +53,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 2, 4 ),
             new CoordinateInAnAxis( 2, 4 ),
-            Direction.EAST);
+            Direction.EAST );
         rover.moveForward();
         assertEquals(rover.getX(), 3);
         assertEquals(rover.getY(), 2);
@@ -63,7 +63,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 2, 4 ),
             new CoordinateInAnAxis( 2, 4 ),
-            Direction.SOUTH);
+            Direction.SOUTH );
         rover.moveForward();
         assertEquals(rover.getX(), 2);
         assertEquals(rover.getY(), 1);
@@ -73,7 +73,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 2, 4 ),
             new CoordinateInAnAxis( 2, 4 ),
-            Direction.NORTH);
+            Direction.NORTH );
         rover.moveForward();
         assertEquals(rover.getX(), 2);
         assertEquals(rover.getY(), 3);
@@ -84,7 +84,7 @@ class MoveForwardRoverTest {
         Rover rover = new Rover(
             new CoordinateInAnAxis( 2, 4 ),
             new CoordinateInAnAxis( 2, 4 ),
-            Direction.WEST);
+            Direction.WEST );
         rover.moveForward();
         assertEquals(rover.getX(), 1);
         assertEquals(rover.getY(), 2);

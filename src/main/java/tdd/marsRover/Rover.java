@@ -7,12 +7,20 @@ public class Rover{
   private Direction direction;
   private CoordinateInAnAxis x;
   private CoordinateInAnAxis y;
-
-
+  private final Obstacles obstacles;
+private boolean foundObstacle = false;
   public Rover( CoordinateInAnAxis x, CoordinateInAnAxis y, Direction direction ){
     this.direction = direction;
     this.x = x;
     this.y = y;
+    this.obstacles = new Obstacles( );
+  }
+
+  public Rover( CoordinateInAnAxis x, CoordinateInAnAxis y, Direction direction, Obstacles obstacles ){
+    this.direction = direction;
+    this.x = x;
+    this.y = y;
+    this.obstacles = obstacles;
   }
 
   public void setDirection( Direction direction ){
@@ -31,6 +39,9 @@ public class Rover{
     return direction;
   }
 
+  public CoordinateInAnAxis getXCoordinateInAnAxis(){
+    return x;
+  }
   public int getX(){
     return x.getCoordinate( );
   }
@@ -40,18 +51,22 @@ public class Rover{
   }
 
   public String getPosition(){
-    return getX()  +"x"+ getY() + getDirection().getShortName();
+    return getX( ) + "x" + getY( ) + getDirection( ).getShortName( );
   }
 
   @Override
   public String toString(){
+    String status = "";
+    if (foundObstacle) {
+      status = " Found Obstacle";
+    }
     return "Rover{" +
         "position= " + getX( ) + " - " + getY( ) +
-        ", direction= " + getDirection( ) +
+        ", direction= " + getDirection( ) + status +
         '}';
   }
 
-  public void move( Direction direction ){
+  public boolean move( Direction direction ){
     int xCoordinate = getX( );
     int yCoordinate = getY( );
     switch(direction){
@@ -72,45 +87,50 @@ public class Rover{
         break;
       }
     }
-    setX( xCoordinate );
-    setY( yCoordinate );
+    if(!hasObstacle( xCoordinate, yCoordinate )){
+      setX( xCoordinate );
+      setY( yCoordinate );
+      foundObstacle = false;
+      return true;
+    }else{
+      foundObstacle = true;
+      return false;
+    }
   }
 
-  public void moveForward(){
-    move( direction );
+  public boolean moveForward(){
+    return move( direction );
   }
 
-  public void moveBack(){
-    move( direction.getBackwardDirection( ) );
+  public boolean moveBack(){
+  return move( direction.getBackwardDirection( ) );
   }
 
-  public void turnLeft(){
+  public boolean turnLeft(){
     Direction newDirection = direction.changeDirection( -1 );
     setDirection( newDirection );
+    return true;
   }
 
-  public void turnRight(){
+  public boolean turnRight(){
     Direction newDirection = direction.changeDirection( 1 );
     setDirection( newDirection );
+    return true;
   }
 
-  public void receiveACommand( char command ){
+  public boolean receiveACommand( char command ){
     switch(command){
       case Command.MOVE_FORWARD:{
-        moveForward( );
-        return;
+        return moveForward( );
       }
       case Command.MOVE_BACK:{
-        moveBack( );
-        return;
+        return moveBack( );
       }
       case Command.TURN_LEFT:{
-        turnLeft( );
-        return;
+        return turnLeft( );
       }
       case Command.TURN_RIGHT:{
-        turnRight( );
-        return;
+        return turnRight( );
       }
       default:{
         throw new IllegalStateException( command + " is invalid command" );
@@ -123,12 +143,20 @@ public class Rover{
       return;
     }
     for(char command : commands.toCharArray( )){
-      try{
-        receiveACommand( Character.toUpperCase( command ) );
-      }catch(Exception e){
-        e.printStackTrace();
+    try{
+        if(!receiveACommand( Character.toUpperCase( command ) )){
+          foundObstacle = true;
+          throw new IllegalStateException( "Rover will be collision with an obstacle if " + command );
+        }
+    }catch(Exception e){
+        e.printStackTrace( );
+        break;
       }
     }
+  }
+
+  public boolean hasObstacle( int x, int y ){
+    return obstacles.hasObstacle( x, y );
   }
 }
 
