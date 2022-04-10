@@ -36,13 +36,14 @@ public class PokerHand{
   }
 
   public ArrangementResult firstDealFiveCards(){
+    Map<Value, Integer> frequentMap = cards.getFrequencyMapForValues();
     if(cards.hasConsecutiveValues( ) && cards.hasAllCardsOfTheSameSuit( )){
-      return new ArrangementResult(FiveCardsArrangement.STRAIGHT_FLUSH);
+      return new ArrangementResult(FiveCardsArrangement.STRAIGHT_FLUSH, frequentMap);
     }
 
     Map<Value, Integer> mapForFourCardsOfTheSameValue = cards.hasFourCardsOfTheSameValue( );
     if(!mapForFourCardsOfTheSameValue.isEmpty()){
-      return new ArrangementResult(FiveCardsArrangement.FOUR_OF_KIND);
+      return new ArrangementResult(FiveCardsArrangement.FOUR_OF_KIND, frequentMap);
     }
 
     Map<Value, Integer> mapForThreeCardsOfTheSameValue =cards.hasThreeCardsOfTheSameValue( );
@@ -52,10 +53,10 @@ public class PokerHand{
     }
 
     if(cards.hasAllCardsOfTheSameSuit( )){
-      return new ArrangementResult(FiveCardsArrangement.FLUSH);
+      return new ArrangementResult(FiveCardsArrangement.FLUSH, frequentMap);
     }
     if(cards.hasConsecutiveValues( )){
-      return new ArrangementResult(FiveCardsArrangement.STRAIGHT);
+      return new ArrangementResult(FiveCardsArrangement.STRAIGHT, frequentMap);
     }
 
     if(!mapForThreeCardsOfTheSameValue.isEmpty()){
@@ -70,9 +71,5 @@ public class PokerHand{
       return new ArrangementResult(FiveCardsArrangement.ONE_PAIR, mapForTwoCardsOfTheSameValue);
     }
     return null;
-  }
-
-  public int compareToHighestCardOf( PokerHand hand2){
-      return cards.compareTo( hand2.getCards() );
   }
 }

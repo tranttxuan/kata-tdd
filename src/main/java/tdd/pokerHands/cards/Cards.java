@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 public class Cards{
   private final List<Card> cards;
+  public Map<Value, Integer> frequencyMapForValues;
 
   public Cards( List<Card> cards ){
     this.cards = sortCards(cards) ;
+    this.frequencyMapForValues = getFrequencyMap();
   }
 
   public Cards( String listShortCards ){
@@ -17,6 +19,11 @@ public class Cards{
       createdCards.add( new Card( name ) );
     }
     this.cards = sortCards(createdCards  ) ;
+    this.frequencyMapForValues = getFrequencyMap();
+  }
+
+  public Map<Value, Integer> getFrequencyMapForValues(){
+    return frequencyMapForValues;
   }
 
   public int size(){
@@ -54,7 +61,7 @@ public class Cards{
     return true;
   }
 
-  public Map<Value, Integer> frequencyMapForValue(){
+  public Map<Value, Integer> getFrequencyMap(){
     Map<Value, Integer> frequencyMap = new HashMap<>( );
 
     for(Card card : cards){
@@ -66,14 +73,14 @@ public class Cards{
   }
 
   private Map<Value, Integer> isNCardsOfTheSameValue( Integer n ){
-    return frequencyMapForValue( )
+    return this.frequencyMapForValues
         .entrySet()
         .stream()
         .filter( entry -> entry.getValue() == n)
         .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
   }
 
-  public  Map<Value, Integer> hasFourCardsOfTheSameValue(){
+  public Map<Value, Integer> hasFourCardsOfTheSameValue(){
     return isNCardsOfTheSameValue( 4 );
   }
 
@@ -90,11 +97,25 @@ public class Cards{
     return frequencyMapForValues.entrySet().stream().count() == 2 ? frequencyMapForValues : Collections.emptyMap();
   }
 
-  public int compareTo( Cards cards2){
-    for(int i= (cards.size() - 1); i >= 0; i--){
-      int compare = cards.get( i ).compareTo(cards2.get(i));
-      if(compare != 0){
-        return compare;
+  public static int compareValuesOfTwoMaps( Map<Value, Integer> frequentMapOfSetOne, Map<Value, Integer> frequentMapOfSetTwo){
+    List<Value> valuesInArrangementOfPlayerOne = frequentMapOfSetOne
+        .keySet( )
+        .stream( )
+        .sorted( Comparator.comparing( Value::getIntValue ) )
+        .collect( Collectors.toList( ) );
+
+    List<Value> valuesInArrangementOfPlayerTwo = frequentMapOfSetTwo
+        .keySet( )
+        .stream( )
+        .sorted( Comparator.comparing( Value::getIntValue ) )
+        .collect( Collectors.toList( ) );
+
+    for(int i = (valuesInArrangementOfPlayerOne.size( ) - 1); i >= 0; i--){
+      {
+        int compare = valuesInArrangementOfPlayerOne.get( i ).comparedTo( valuesInArrangementOfPlayerTwo.get( i ) );
+        if(compare != 0){
+          return compare;
+        }
       }
     }
     return 0;

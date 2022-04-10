@@ -96,16 +96,16 @@ public class CardsTest{
   @Test
   void compareToOtherSortedSCardSet_ShouldReturnAnIntegerGreaterThan0_WhenGivenCardSetHasHigherCard(){
     Cards cards1 = new Cards( "5D 5C 10H 8D 5S" );
-    Cards cards2 = new Cards( "5D 5C 8H 8D 5S" );
-    int compare = cards1.compareTo( cards2);
-    assertTrue( compare >0 );
+    Cards cards2 = new Cards( "5D 5C 8H 9D 5S" );
+    int compare = Cards.compareValuesOfTwoMaps( cards1.frequencyMapForValues, cards2.frequencyMapForValues );
+    assertTrue( compare > 0 );
   }
 
   @Test
   void compareToOtherSortedSCardSet_ShouldReturnAnIntegerLessThan0_WhenTheOtherCardSetHasHigherCard(){
     Cards cards1 = new Cards( "5D 5C 10H 8D 5S" );
     Cards cards2 = new Cards( "5D AC 8H 8D 5S" );
-    int compare = cards1.compareTo( cards2);
+    int compare = Cards.compareValuesOfTwoMaps( cards1.frequencyMapForValues, cards2.frequencyMapForValues );
     assertTrue( compare <0 );
   }
 
@@ -113,7 +113,7 @@ public class CardsTest{
   void compareToOtherSortedSCardSet_ShouldReturnAnIntegerEqual0_WhenTheyHaveCardsWithSameValue(){
     Cards cards1 = new Cards( "5D 5C 10H 8D 5S" );
     Cards cards2 = new Cards( "5C 5H 10C 8S 5S" );
-    int compare = cards1.compareTo( cards2);
+    int compare = Cards.compareValuesOfTwoMaps( cards1.frequencyMapForValues, cards2.frequencyMapForValues );
     assertTrue( compare == 0 );
   }
 }

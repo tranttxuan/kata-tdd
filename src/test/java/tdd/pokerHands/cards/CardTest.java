@@ -10,7 +10,6 @@ class CardTest{
   @Test
   void createCard_WhenInjectingShortNameOfACard_2C(){
     Card newCard = new Card( "2C" );
-    System.out.println( newCard.getValue( ) );
     assertEquals( newCard.getValue( ), Value.TWO );
     assertEquals( newCard.getSuit( ), Suit.CLUB );
   }
