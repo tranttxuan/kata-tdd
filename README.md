@@ -1,6 +1,6 @@
 # kata-tdd
 
-## This repository contains some hands-on programming exercises that help me hone specific skills through practice.
+## This repository contains some hands-on programming exercises that help me hone specific skills in JAVA through practice.
 
 ### Poker-hands
 
