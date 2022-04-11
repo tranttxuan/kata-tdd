@@ -6,6 +6,7 @@ import tdd.pokerHands.exceptions.DifferentCardsExpectedException;
 import tdd.pokerHands.exceptions.FiveCardsExpectedException;
 import tdd.pokerHands.cards.FiveCardsArrangement;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class PokerHand{
@@ -13,13 +14,31 @@ public class PokerHand{
   private FiveCardsArrangement bestArrangement;
 
   public PokerHand( Cards cards ){
+    checkReceivedCards(cards);
+    this.cards = cards;
+  }
+  public PokerHand( String listShortCards ){
+    Cards cards = new Cards( listShortCards );
+    checkReceivedCards(cards);
+    this.cards = cards;
+  }
+
+  private void checkReceivedCards( Cards cards ){
     if(!hasFiveCardsInHand( cards )){
       throw new FiveCardsExpectedException( );
     }
     if(!hasDifferentCardsInHand( cards )){
       throw new DifferentCardsExpectedException( );
     }
-    this.cards = cards;
+  }
+
+  @Override
+  public String toString(){
+    String bestArrangement;
+    if (firstDealFiveCards() != null ){
+      return ": cards=" + cards.toString() + " - " + firstDealFiveCards().getBestArrangement().toString();
+    }
+    return ": cards=" + cards.toString();
   }
 
   public Cards getCards(){
@@ -72,4 +91,5 @@ public class PokerHand{
     }
     return null;
   }
+
 }

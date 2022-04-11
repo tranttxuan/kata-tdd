@@ -85,4 +85,18 @@ class GameTest{
     String winner = game.compareTwoPlayers();
     assertEquals( winner, "Player2");
   }
+
+  @Test
+  void play_ShouldReturnEachPlayerHold5Cards(){
+    String winner = game.play();
+    assertEquals( game.getPlayerOne().getPokerHand().getCards().size(), 5);
+    assertEquals( game.getPlayerTwo().getPokerHand().getCards().size(), 5);
+  }
+
+  @Test
+  void play_EachPokerHandHasFiveCards(){
+    String winner = game.play("10H 10C QD 5H JH", "10D 3H 10S 2D AD");
+    assertEquals( winner, "Player2");
+  }
+
 }

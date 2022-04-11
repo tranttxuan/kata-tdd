@@ -124,4 +124,9 @@ public class Cards{
   public Card get(int index){
     return cards.get( index );
   }
+
+  @Override
+  public String toString(){
+    return " " + cards.stream().map( card -> card.toString() ).collect( Collectors.toList());
+  }
 }

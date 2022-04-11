@@ -1,20 +1,61 @@
 package tdd.pokerHands.gameServices;
 
+import tdd.pokerHands.cards.Card;
 import tdd.pokerHands.cards.Cards;
 import tdd.pokerHands.cards.FiveCardsArrangement;
 import tdd.pokerHands.hand.ArrangementResult;
 import tdd.pokerHands.hand.PokerHand;
+
+import java.util.*;
 
 public class Game{
   private Player playerOne;
   private Player playerTwo;
   private Boolean gameOver;
 
-
   public Game( Player playerOne, Player playerTwo ){
     this.playerOne = playerOne;
     this.playerTwo = playerTwo;
     this.gameOver = false;
+  }
+
+  public String play(){
+    dealCardsToPlayer( );
+    System.out.println( playerOne.getName( ) + ": " + playerOne.getPokerHand( ).toString( ) );
+    System.out.println( playerTwo.getName( ) + ": " + playerTwo.getPokerHand( ).toString( ) );
+    return compareTwoPlayers( );
+  }
+
+  private void dealCardsToPlayer(){
+    List<Card> cardDeck = new ArrayList<>( new Standard52CardDeck( ).cards );
+    Collections.shuffle( cardDeck );
+
+    List<Integer> integerList = new ArrayList<>( );
+    int count = 1;
+    while(count <= 10){
+      int randomInteger = new Random( ).nextInt( 52 );
+      if(!integerList.contains( randomInteger )){
+        integerList.add( randomInteger );
+        count++;
+      }
+    }
+
+    List<Card> cardsForPlayerOne = new ArrayList<>( );
+    List<Card> cardsForPlayerTwo = new ArrayList<>( );
+
+    for(int i = 0; i < 10; i++){
+      if(i % 2 == 0) cardsForPlayerOne.add( cardDeck.get( integerList.get( i ) ) );
+      else cardsForPlayerTwo.add( cardDeck.get( integerList.get( i ) ) );
+    }
+
+    setPlayerOne( new PokerHand( new Cards( cardsForPlayerOne ) ) );
+    setPlayerTwo( new PokerHand( new Cards( cardsForPlayerTwo ) ) );
+  }
+
+  public String play( String cardsForPlayerOne, String cardsForPlayerTwo ){
+    setPlayerOne( new PokerHand( cardsForPlayerOne ) );
+    setPlayerTwo( new PokerHand( cardsForPlayerTwo ) );
+    return compareTwoPlayers( );
   }
 
   public void setPlayerOne( PokerHand pokerHand ){
@@ -23,6 +64,14 @@ public class Game{
 
   public void setPlayerTwo( PokerHand pokerHand ){
     this.playerTwo.setPokerHand( pokerHand );
+  }
+
+  public Player getPlayerOne(){
+    return playerOne;
+  }
+
+  public Player getPlayerTwo(){
+    return playerTwo;
   }
 
   public String compareTwoPlayers(){

@@ -57,4 +57,9 @@ public class Card{
     if(parsedSuit == null) throw new CardSuitExpectedException( nameCard + " has the wrong suit name");
     this.suit = parsedSuit;
   }
+
+  @Override
+  public String toString(){
+    return " card: " + value.getIntValue() + suit.getSuit();
+  }
 }
