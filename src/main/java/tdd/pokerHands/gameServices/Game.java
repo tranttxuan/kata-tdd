@@ -9,11 +9,11 @@ import tdd.pokerHands.hand.PokerHand;
 import java.util.*;
 
 public class Game{
-  private Player playerOne;
-  private Player playerTwo;
+  private PokerHand playerOne;
+  private PokerHand playerTwo;
   private Boolean gameOver;
 
-  public Game( Player playerOne, Player playerTwo ){
+  public Game( PokerHand playerOne, PokerHand playerTwo ){
     this.playerOne = playerOne;
     this.playerTwo = playerTwo;
     this.gameOver = false;
@@ -21,8 +21,8 @@ public class Game{
 
   public String play(){
     dealCardsToPlayer( );
-    System.out.println( playerOne.getName( ) + ": " + playerOne.getPokerHand( ).toString( ) );
-    System.out.println( playerTwo.getName( ) + ": " + playerTwo.getPokerHand( ).toString( ) );
+    System.out.println( playerOne.getName( ) + ": " + playerOne.toString( ) );
+    System.out.println( playerTwo.getName( ) + ": " + playerTwo.toString( ) );
     return compareTwoPlayers( );
   }
 
@@ -48,37 +48,45 @@ public class Game{
       else cardsForPlayerTwo.add( cardDeck.get( integerList.get( i ) ) );
     }
 
-    setPlayerOne( new PokerHand( new Cards( cardsForPlayerOne ) ) );
-    setPlayerTwo( new PokerHand( new Cards( cardsForPlayerTwo ) ) );
+    setPlayerOne( new Cards( cardsForPlayerOne ) ) ;
+    setPlayerTwo( new Cards( cardsForPlayerTwo ) );
   }
 
   public String play( String cardsForPlayerOne, String cardsForPlayerTwo ){
-    setPlayerOne( new PokerHand( cardsForPlayerOne ) );
-    setPlayerTwo( new PokerHand( cardsForPlayerTwo ) );
+    setPlayerOne( cardsForPlayerOne );
+    setPlayerTwo(cardsForPlayerTwo );
     return compareTwoPlayers( );
   }
 
-  public void setPlayerOne( PokerHand pokerHand ){
-    this.playerOne.setPokerHand( pokerHand );
+  public void setPlayerOne( Cards cards ){
+    this.playerOne.setCards( cards );
   }
 
-  public void setPlayerTwo( PokerHand pokerHand ){
-    this.playerTwo.setPokerHand( pokerHand );
+  public void setPlayerTwo( Cards cards  ){
+    this.playerTwo.setCards( cards );
   }
 
-  public Player getPlayerOne(){
+  public void setPlayerOne( String cards ){
+    this.playerOne.setCards( cards );
+  }
+
+  public void setPlayerTwo( String cards  ){
+    this.playerTwo.setCards( cards );
+  }
+
+  public PokerHand getPlayerOne(){
     return playerOne;
   }
 
-  public Player getPlayerTwo(){
+  public PokerHand getPlayerTwo(){
     return playerTwo;
   }
 
   public String compareTwoPlayers(){
 
     // First Cards Arrangement
-    ArrangementResult arrangementResultOfPlayerOne = playerOne.getPokerHand( ).firstDealFiveCards( );
-    ArrangementResult arrangementResultOfPlayerTwo = playerTwo.getPokerHand( ).firstDealFiveCards( );
+    ArrangementResult arrangementResultOfPlayerOne = playerOne.firstDealFiveCards( );
+    ArrangementResult arrangementResultOfPlayerTwo = playerTwo.firstDealFiveCards( );
 
     if(arrangementResultOfPlayerOne == null) return playerTwo.getName( );
 
@@ -105,7 +113,7 @@ public class Game{
     // in case: Straight flush - Four of a kind - Flush - Straight - and other cases
 
     {
-      int compare = Cards.compareValuesOfTwoMaps( playerOne.getPokerHand( ).getCards( ).getFrequencyMap( ), playerTwo.getPokerHand( ).getCards( ).getFrequencyMap( ) );
+      int compare = Cards.compareValuesOfTwoMaps( playerOne.getCards( ).getFrequencyMap( ), playerTwo.getCards( ).getFrequencyMap( ) );
       String winner = returnWinner( compare );
       if(winner != null) return winner;
     }
